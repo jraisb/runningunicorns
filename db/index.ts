@@ -5,10 +5,7 @@ import * as schema from './schema'
 function createDb() {
   if (!process.env.DATABASE_URL) {
     // During build time, DATABASE_URL might not be available
-    // Return a mock db that will fail if actually used
-    if (process.env.NODE_ENV === 'production' && process.env.VERCEL_ENV) {
-      throw new Error('DATABASE_URL environment variable is not set in production')
-    }
+    // Only warn during build, don't throw - runtime calls will fail naturally
     console.warn('DATABASE_URL not set - database features will not work')
     return null as any
   }
